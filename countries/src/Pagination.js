@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import List from "./List";
+import { Link } from 'react-router-dom';
 
 class Pagination extends Component {
     constructor(props) {
@@ -14,13 +14,14 @@ class Pagination extends Component {
         this.setState({
             currentPage: Number(event.target.id)
         });
+        this.props.history.push(`/${event.target.id}`)
     }
 
 
     render() {
+        console.log(this.props.match.params.id);
         const { currentPage, countriesPerPage } = this.state;
         const { countries, countryCodes } = this.props;
-        console.log(countries);
 
         const lastIndex = currentPage * countriesPerPage;
         const firstIndex = lastIndex - countriesPerPage;
@@ -37,16 +38,17 @@ class Pagination extends Component {
             pageNum = [...pageNum, i];
         }
 
-        const renderPageNumbers = pageNum.map(num => {
-            
-            if(num >= this.state.currentPage - 2 && num <= this.state.currentPage - 2) {
+        const renderPageNumbers = 
+            pageNum.map(num => {
+            if(num >= this.state.currentPage - 2 && num <= this.state.currentPage + 2) {
                 return (
-                    <li className="page-item">
-                        <Link className="page-link" id={num} key={num}>
+                    <button onClick={this.handleClick} id={num} key={num} className="page-item">
                             {num}
-                        </Link>
-                    </li>
+                        
+                    </button>
                 )
+            } else {
+                return <div></div>
             }
         })
 
@@ -54,13 +56,12 @@ class Pagination extends Component {
         return (
             <div>
                 <div>{renderCountries}</div>
-                <div>
-                    <Link>First</Link>
-                    <Link>Prev</Link>
-                    {renderPageNumbers}
-                    <Link>Next</Link>
-                    <Link>Last</Link>
-                </div>   
+                <div onClick={this.handleClick} id="1">First</div>
+                <div onClick={this.handleClick} id={this.state.currentPage - 1}>Prev</div>
+                <div>{renderPageNumbers}</div>
+                <div onClick={this.handleClick} id={this.state.currentPage + 1}>Next</div>
+                <div id={Math.ceil(countries.length/countriesPerPage)} onClick={this.handleClick}>Last</div>
+{/* TODO: Handle edge cases where < 1 and > 26 */}
             </div>
         );
     }

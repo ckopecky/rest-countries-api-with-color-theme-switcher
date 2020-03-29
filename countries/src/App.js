@@ -1,7 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Pagination from './Pagination';
+import CountryDetail from './CountryDetail';
 import './App.css';
+import { Switch, Route } from 'react-router-dom';
 
 class App extends Component {
   state = {
@@ -24,12 +26,28 @@ class App extends Component {
   }
 
   render() {
-    return (
-      this.state.loading ? 
-      <div>There are no messages to display</div>
-      : <Pagination countries={this.state.countries} countryCodes={this.state.countryCodes}/>
-
-    )
+      if(this.state.loading) {
+        return (
+          <div>There are no countries to display</div>
+        )
+      } 
+      
+      else {
+        return (
+          <Switch>
+            <Route exact path="/" render={(props) => {
+              return <Pagination {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
+            }} />
+            <Route path="/:id" render={(props) => {
+              return <Pagination {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
+            }} />  
+            <Route path="/:id/:name" render={(props) => {
+              return <CountryDetail {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
+            }} />          
+            </Switch>
+          
+        )
+        }
   }
     
 }
