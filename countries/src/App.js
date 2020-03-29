@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { Component } from 'react';
+import axios from 'axios';
+import Pagination from './Pagination';
 import './App.css';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+  state = {
+    countries: [],
+    countryCodes: {},
+    loading: true
+  }
+
+  async componentDidMount() {
+    let fetch = await axios.get('https://restcountries.eu/rest/v2/all');
+    if(fetch) {
+      let countryCodes = {};
+      fetch.data.forEach(country => {
+        countryCodes[country.alpha3Code] = country.name;
+      });
+      this.setState({countries: fetch.data, countryCodes, loading: false });
+    } else {
+      this.setState({ loading: false });
+    }
+  }
+
+  render() {
+    return (
+      this.state.loading ? 
+      <div>There are no messages to display</div>
+      : <Pagination countries={this.state.countries} countryCodes={this.state.countryCodes}/>
+
+    )
+  }
+    
 }
 
 export default App;
