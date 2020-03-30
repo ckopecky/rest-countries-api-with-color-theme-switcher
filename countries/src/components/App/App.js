@@ -1,10 +1,9 @@
 import React, { Component } from 'react';
 import axios from 'axios';
-import Pagination from './Pagination';
-import CountryDetail from './CountryDetail';
+import Pagination from '../Pagination/Pagination';
+import CountryDetail from '../CountryDetail/CountryDetail';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
-import CountryMain from './CountryMain';
 
 class App extends Component {
   state = {

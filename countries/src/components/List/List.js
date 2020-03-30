@@ -1,5 +1,5 @@
 import React from 'react';
-import CountryMain from "./CountryMain";
+import CountryMain from "../CountryMain/CountryMain";
 
 const List = (props) => {
     console.log(props)

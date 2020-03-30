@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 
 const CountryMain = (props) => {
 
     const { name, flag, population, region, capital } = props.country;
 
-    const { countryCodes, country, currentPage } = props;
     return (
         <div id={props.alpha3Code} className="outer-container">
             <Link name="country" to={{pathname: `/${name}`, state: {country: props.country}}}>

@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import List from "./List";
-import { Link } from 'react-router-dom';
+import List from "../List/List";
 
 class Pagination extends Component {
     constructor(props) {
@@ -48,7 +47,7 @@ class Pagination extends Component {
                     </button>
                 )
             } else {
-                return;
+                return <div></div>;
             }
         })
 

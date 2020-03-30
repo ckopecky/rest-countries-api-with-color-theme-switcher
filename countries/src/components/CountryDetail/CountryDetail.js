@@ -1,5 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 
 const Country = (props) => {
 
@@ -69,7 +68,7 @@ const Country = (props) => {
                                     <button id={countryCodes[border]} key={countryCodes[border]} onClick={handleLinkClick}>{countryCodes[border]}</button>
                                 )
                             } else {
-                                return;
+                                return <div></div>;
                             }
                         })}
                     </div>
