@@ -4,6 +4,7 @@ import Pagination from './Pagination';
 import CountryDetail from './CountryDetail';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
+import CountryMain from './CountryMain';
 
 class App extends Component {
   state = {
@@ -21,8 +22,14 @@ class App extends Component {
       });
       this.setState({countries: fetch.data, countryCodes, loading: false });
     } else {
-      this.setState({ loading: false });
+      this.setState({ loading: false }, console.log("problem with fetching countries"));
     }
+  }
+
+  selectCountry = (country) => {
+    this.setState({country}, () => {
+      console.log(`${country} has been set on state`);
+    });
   }
 
   render() {
@@ -38,12 +45,10 @@ class App extends Component {
             <Route exact path="/" render={(props) => {
               return <Pagination {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
             }} />
-            <Route path="/:id" render={(props) => {
-              return <Pagination {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
-            }} />  
-            <Route path="/:id/:name" render={(props) => {
+            <Route path="/:name" render={(props) => {
               return <CountryDetail {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
-            }} />          
+            }} />   
+                  
             </Switch>
           
         )

@@ -2,10 +2,19 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const Country = (props) => {
-    const { name, nativeName, flag, population, region, subregion, capital, topLevelDomain, currencies, languages, borders } = props.country;
+
+    const { name, nativeName, flag, population, region, subregion, capital, topLevelDomain, currencies, languages, borders } = props.history.location.state.country[0] || props.history.location.state.country;
 
     const { countryCodes } = props;
-    
+    console.log("detail", props)
+
+    const handleLinkClick = (event) => {
+        let filtered = props.countries.filter(country => {
+            return country.name === event.target.id
+        });
+        props.history.push(`/${filtered[0].name}`, {country: filtered});
+
+    }
     return (
         <div>
             <div className="outer-container">
@@ -22,13 +31,13 @@ const Country = (props) => {
                 <p>Top Level Domain: 
                     {topLevelDomain.map(domain => {
                     return (
-                        <span>{domain}</span>
+                        <span key={domain}>  {domain}</span>
                     )
                     })}
                 </p>
                 <p>Currency: {currencies.map(currency => {
                     return (
-                        <span>{currency.name}</span>
+                        <span key={currency}>{currency.name}</span>
                     )
                 })}
                 
@@ -36,11 +45,11 @@ const Country = (props) => {
                 <p>Languages: {languages.map((language, index) => {
                     if(index !== languages.length - 1) {
                         return (
-                            <span>{language.name}, </span>
+                            <span key={language.name}>{language.name}, </span>
                         ) 
                     } else {
                         return (
-                            <span>{language.name} </span>
+                            <span key={language.name}>{language.name} </span>
                         ) 
                     }
                 
@@ -56,14 +65,10 @@ const Country = (props) => {
 
                             if(borders.includes(border) && index < 3) {
                                 return (
-                                    <button>
-                                        <Link>{countryCodes[border]}</Link>
-                                    </button>
+                                    <button id={countryCodes[border]} key={countryCodes[border]} onClick={handleLinkClick}>{countryCodes[border]}</button>
                                 )
                             } else {
-                                return (
-                                    <span></span>
-                                )
+                                return;
                             }
                         })}
                     </div>

@@ -14,12 +14,12 @@ class Pagination extends Component {
         this.setState({
             currentPage: Number(event.target.id)
         });
-        this.props.history.push(`/${event.target.id}`)
+        this.props.history.push(`/`)
     }
 
 
     render() {
-        console.log(this.props.match.params.id);
+        console.log(this.props.match.params);
         const { currentPage, countriesPerPage } = this.state;
         const { countries, countryCodes } = this.props;
 
@@ -29,7 +29,7 @@ class Pagination extends Component {
         const currentCountries = countries.slice(firstIndex, lastIndex);
 
         const renderCountries =
-            <List countries={currentCountries} countryCodes={countryCodes}/>
+            <List {...this.props} countries={currentCountries} currentPage={this.state.currentPage} countryCodes={countryCodes}/>
         ;
 
         let pageNum = [];
@@ -48,7 +48,7 @@ class Pagination extends Component {
                     </button>
                 )
             } else {
-                return <div></div>
+                return;
             }
         })
 
