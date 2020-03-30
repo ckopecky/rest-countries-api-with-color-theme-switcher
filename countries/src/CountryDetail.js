@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 const Country = (props) => {
 
-    const { name, nativeName, flag, population, region, subregion, capital, topLevelDomain, currencies, languages, borders } = props.history.location.state.country[0] || props.history.location.state.country;
+    const { name, nativeName, flag, population, region, subregion, capital, topLevelDomain, currencies, languages, borders } = props.history.location.state.country;
 
     const { countryCodes } = props;
     console.log("detail", props)
@@ -12,7 +12,8 @@ const Country = (props) => {
         let filtered = props.countries.filter(country => {
             return country.name === event.target.id
         });
-        props.history.push(`/${filtered[0].name}`, {country: filtered});
+        filtered = filtered[0];
+        props.history.push(`/${filtered.name}`, {country: filtered});
 
     }
     return (
