@@ -1,0 +1,5 @@
+.outer-container {
+    background: green;
+    display: flex;
+    margin: 20px;
+}

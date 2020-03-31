@@ -4,6 +4,7 @@ import Pagination from '../Pagination/Pagination';
 import CountryDetail from '../CountryDetail/CountryDetail';
 import './App.css';
 import { Switch, Route } from 'react-router-dom';
+import Navigation from '../Navigation/Navigation';
 
 class App extends Component {
   state = {
@@ -25,31 +26,29 @@ class App extends Component {
     }
   }
 
-  selectCountry = (country) => {
-    this.setState({country}, () => {
-      console.log(`${country} has been set on state`);
-    });
-  }
-
   render() {
       if(this.state.loading) {
         return (
-          <div>There are no countries to display</div>
+          <>
+          <Navigation text="Where in the World?" mode="light"/>
+            <div>There are no countries to display
+            </div>
+          </>
         )
       } 
       
       else {
         return (
-          <Switch>
-            <Route exact path="/" render={(props) => {
-              return <Pagination {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
-            }} />
-            <Route path="/:name" render={(props) => {
-              return <CountryDetail {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
-            }} />   
-                  
+          <>
+              <Navigation text="Where in the World?" mode="light"/>            <Switch>
+              <Route exact path="/" render={(props) => {
+                return <Pagination {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
+              }} />
+              <Route path="/:name" render={(props) => {
+                return <CountryDetail {...props} countries={this.state.countries} countryCodes={this.state.countryCodes}/>
+              }} />        
             </Switch>
-          
+          </>
         )
         }
   }
