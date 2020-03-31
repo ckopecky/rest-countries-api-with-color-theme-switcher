@@ -1,0 +1,13 @@
+nav {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100px;
+}
+
+@media only screen and (min-width: 900px) {
+    nav {
+        height: 50px;
+    }
+}
