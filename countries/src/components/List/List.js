@@ -1,5 +1,6 @@
 import React from 'react';
 import CountryMain from "../CountryMain/CountryMain";
+import "./List.css";
 
 const List = (props) => {
     console.log(props)
