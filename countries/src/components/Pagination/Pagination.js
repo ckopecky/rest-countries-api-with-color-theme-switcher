@@ -1,88 +1,75 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import List from "../List/List";
 import "./Pagination.css"
 
-class Pagination extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            currentPage: 1,
-            countriesPerPage: 12
+
+const Pagination = (props) => {
+    console.log(props, "props")
+    const [ currentPage, setCurrentPage ] = useState(1);
+    const [ countriesPerPage, setCountriesPerPage ] = useState(12);
+
+    const handleClick = event => {
+        if(currentPage >= 1 && currentPage <= Math.ceil(props.countries.length/countriesPerPage)) {
+            setCurrentPage(Number(event.target.id));
         }
-    }
-    handleClick = event => {
-        if(this.state.currentPage >= 1 && this.state.currentPage <= Math.ceil(this.props.countries.length/this.state.countriesPerPage)) {
-            this.setState({
-                currentPage: Number(event.target.id)
-            });
-            this.props.history.push(`/`)
-            }
+        props.history.push("/");
     }
 
+    const { countries, countryCodes } = props;
 
-    render() {
-        const { currentPage, countriesPerPage } = this.state;
-        const { countries, countryCodes } = this.props;
+    const lastIndex = currentPage * countriesPerPage;
+    const firstIndex = lastIndex - countriesPerPage;
+    const currentCountries = countries.slice(firstIndex, lastIndex);
+    
+    const renderCountries =
+    <List {...props} countries={currentCountries} currentPage={currentPage} countryCodes={countryCodes}/>
 
-        const lastIndex = currentPage * countriesPerPage;
-        const firstIndex = lastIndex - countriesPerPage;
+    let pageNum = [];
+    for(let i = 1; i <= Math.ceil(countries.length/countriesPerPage); i++) {
+        pageNum = [...pageNum, i];
+    }
 
-        const currentCountries = countries.slice(firstIndex, lastIndex);
-
-        const renderCountries =
-            <List {...this.props} countries={currentCountries} currentPage={this.state.currentPage} countryCodes={countryCodes}/>
-        ;
-
-        let pageNum = [];
-
-        for(let i = 1; i <= Math.ceil(countries.length/countriesPerPage); i++) {
-            pageNum = [...pageNum, i];
-        }
-
-        const renderPageNumbers = 
+    const renderPageNumbers = 
             pageNum.map(num => {
-            if(num >= this.state.currentPage - 2 && num <= this.state.currentPage + 2) {
+            if(num >= currentPage - 2 && num <= currentPage + 2) {
                 return (
-                    <button onClick={this.handleClick} name="currentPage" value={this.state.currentPage} id={num} key={num} className="page-item">
+                    <button onClick={handleClick} name="currentPage" value={currentPage} id={num} key={num} className="page-item">
                             {num}
-                        
                     </button>
                 )
             } else {
                 return <div></div>;
             }
-        })
-
+        });
 
         return (
             <div>
                 <div>{renderCountries}</div>
                 <div className="pagination-container">
                     <div 
-                        className={this.state.currentPage === 1 ? "hidden": "render-pages"} onClick={this.handleClick} 
+                        className={currentPage === 1 ? "hidden": "render-pages"} onClick={handleClick} 
                         id="1">
                             ≤≤
                     </div>
                     <div 
-                        className={this.state.currentPage === 1 ? "hidden": "render-pages"}  onClick={this.handleClick} id={this.state.currentPage - 1}>≤</div>
+                        className={currentPage === 1 ? "hidden": "render-pages"}  onClick={handleClick} id={currentPage - 1}>≤</div>
                     <div 
-                        className={this.state.currentPage ?"current-page": "render-pages"}>{renderPageNumbers}
+                        className={currentPage ?"current-page": "render-pages"}>{renderPageNumbers}
                     </div>
                     <div
-                        className={this.state.currentPage === Math.ceil(countries.length/countriesPerPage) ? "hidden": "render-pages"} 
-                        onClick={this.handleClick} 
-                        id={this.state.currentPage + 1}>
+                        className={currentPage === Math.ceil(countries.length/countriesPerPage) ? "hidden": "render-pages"} 
+                        onClick={handleClick} 
+                        id={currentPage + 1}>
                             ≥
                     </div>
                     <div 
-                        className={this.state.currentPage === Math.ceil(countries.length/countriesPerPage) ? "hidden": "render-pages"}
-                        id={Math.ceil(countries.length/countriesPerPage)} onClick={this.handleClick}>
+                        className={currentPage === Math.ceil(countries.length/countriesPerPage) ? "hidden": "render-pages"}
+                        id={Math.ceil(countries.length/countriesPerPage)} onClick={handleClick}>
                             ≥≥
                     </div>
                 </div>
             </div>
         );
-    }
 }
 
 export default Pagination;

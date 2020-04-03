@@ -1,20 +1,23 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
-const useAxiosGet = (url) => {
+export const useAxiosGet = (url) => {
     const [ data, setData ] = useState([]);
 
-    
     useEffect(() => {
-        const axiosGetData = async () => {
-            const response = await axios.get(url);
-            if(response) {
-                await setData(response.data);
+            const getData = async (url) => {
+                const fetched = await axios.get(url);
+                if (fetched) {
+                    console.log(fetched, "<=============FETCH works")
+                    setData(fetched.data);
+                } else {
+                    throw Error("axios call didn't work -- GET");
+                }
             }
-        }
-        axiosGetData();
+            getData(url);
+            
     }, [url]);
+
     return data;
 }
 
-export default useAxiosGet;
