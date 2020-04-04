@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import Pagination from '../Pagination/Pagination';
 import CountryDetail from '../CountryDetail/CountryDetail';
-import './App.css';
 import { Switch, Route } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import { useAxiosGet } from "./hooks/useAxiosGet";
