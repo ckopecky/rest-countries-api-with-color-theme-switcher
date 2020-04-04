@@ -1,5 +1,15 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
+const Button = (props) => {
+    return (
+        <Link to={{pathname: props.name, state: {country: props.country}}}>
+            <button>
+                {props.name}
+            </button>
+        </Link>
+    )
+}
 const Country = (props) => {
     console.log(props);
     const { name, nativeName, flag, population, region, capital, topLevelDomain, subregion, borders, currencies, languages} = props.history.location.state.country;
@@ -13,6 +23,18 @@ const Country = (props) => {
             return;
         }
         return name;
+    }
+
+    const getBorderCountryInfo = (str) => {
+        const { countries } = props;
+        console.log(countries)
+        console.log(str);
+        const index = countries.filter(country => {
+            return str === country.alpha3Code;
+        })
+        console.log(index);
+        return index[0];
+
     }
     return (
         <div id={props.alpha3Code} className="outer-container">
@@ -45,8 +67,12 @@ const Country = (props) => {
                 </div>
                 <div>
                     Border Countries: {borders.map(border => {
+                        let info = getBorderCountryInfo(border)
+                        console.log("border country info", info)
+                        const name = getBorderCountryNames(border);
+                        console.log(name, "name");
                         return (
-                        <button>{getBorderCountryNames(border)}</button>
+                        <Button name={getBorderCountryNames(border)} country={info}/>
                         )
                     })}
                 </div>
