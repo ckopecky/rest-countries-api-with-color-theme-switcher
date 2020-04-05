@@ -1,14 +1,15 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import CountryMain from "../CountryMain/CountryMain";
 import "./List.css";
+import { AppContext } from '../../context/AppContext';
 
 const List = (props) => {
-    const { countries, countryCodes, currentPage } = props;
+    const { countries } = useContext(AppContext);
+    const { currentPage } = props;
     return (
         <div className="list-countries">
             {countries.map((country, index)=> {
-                console.log(country);
-            return <CountryMain {...props} key={index} currentPage={currentPage} country={country} countryCodes={countryCodes}/>
+            return <CountryMain {...props} key={index} currentPage={currentPage} country={country} />
     })}
     </div>
     );

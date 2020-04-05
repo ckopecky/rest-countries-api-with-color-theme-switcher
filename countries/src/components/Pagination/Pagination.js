@@ -1,28 +1,27 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import List from "../List/List";
 import "./Pagination.css"
+import { AppContext } from '../../context/AppContext';
 
 
 const Pagination = (props) => {
-    console.log(props, "props")
+    const { countries } = useContext(AppContext);
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ countriesPerPage, setCountriesPerPage ] = useState(12);
 
     const handleClick = event => {
-        if(currentPage >= 1 && currentPage <= Math.ceil(props.countries.length/countriesPerPage)) {
+        if(currentPage >= 1 && currentPage <= Math.ceil(countries.length/countriesPerPage)) {
             setCurrentPage(Number(event.target.id));
         }
         props.history.push("/");
     }
-
-    const { countries, countryCodes } = props;
 
     const lastIndex = currentPage * countriesPerPage;
     const firstIndex = lastIndex - countriesPerPage;
     const currentCountries = countries.slice(firstIndex, lastIndex);
     
     const renderCountries =
-    <List {...props} countries={currentCountries} currentPage={currentPage} countryCodes={countryCodes}/>
+    <List {...props} countries={currentCountries} currentPage={currentPage}/>
 
     let pageNum = [];
     for(let i = 1; i <= Math.ceil(countries.length/countriesPerPage); i++) {
