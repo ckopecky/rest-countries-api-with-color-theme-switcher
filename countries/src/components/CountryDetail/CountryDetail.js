@@ -1,13 +1,14 @@
 import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
+import { ButtonStyle } from './ButtonStyle';
 
 const Button = (props) => {
     return (
         <Link to={{pathname: props.name, state: {country: props.country}}}>
-            <button key={props.country}>
+            <ButtonStyle key={props.country}>
                 {props.name} 
-            </button>
+            </ButtonStyle>
         </Link>
     )
 }
@@ -15,7 +16,8 @@ const Country = (props) => {
     console.log(props);
     const { name, nativeName, flag, population, region, capital, topLevelDomain, subregion, borders, currencies, languages} = props.history.location.state.country;
 
-    const { countries } = useContext(AppContext);
+    const c = useContext(AppContext);
+    const countries = c.context.countries
 
 
     const getBorderCountryNames = (str) => {
@@ -30,12 +32,9 @@ const Country = (props) => {
     }
 
     const getBorderCountryInfo = (str) => {
-        console.log(countries)
-        console.log(str);
         const index = countries.filter(country => {
             return str === country.alpha3Code;
         })
-        console.log(index);
         return index[0];
 
     }

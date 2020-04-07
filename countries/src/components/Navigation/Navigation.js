@@ -1,16 +1,19 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import "./Navigation.css";
+import { AppContext } from '../../context/AppContext';
 
 const Navigation = (props) => {
+    const context = useContext(AppContext);
+    console.log(context, "nav context")
     const handleClick = (event) => {
-        console.log("click is handled!");
+        context.toggle.toggleTheme();
     }
     return (
         <div>
             <nav>
-                <header>
+                <h1>
                     {props.text}
-                </header>
+                </h1>
                 <div onClick={handleClick}>
                     {props.mode}
                 </div>

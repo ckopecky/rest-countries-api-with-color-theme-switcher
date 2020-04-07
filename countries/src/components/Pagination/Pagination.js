@@ -5,7 +5,10 @@ import { AppContext } from '../../context/AppContext';
 
 
 const Pagination = (props) => {
-    const { countries } = useContext(AppContext);
+    const c = useContext(AppContext);
+    console.log(c);
+    const countries = c.context.countries
+    
     const [ currentPage, setCurrentPage ] = useState(1);
     const [ countriesPerPage, setCountriesPerPage ] = useState(12);
 
@@ -28,11 +31,19 @@ const Pagination = (props) => {
         pageNum = [...pageNum, i];
     }
 
+    const isActive = () => {
+        if(currentPage) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     const renderPageNumbers = 
             pageNum.map(num => {
             if(num >= currentPage - 2 && num <= currentPage + 2) {
                 return (
-                    <button onClick={handleClick} name="currentPage" value={currentPage} id={num} key={num} className="page-item">
+                    <button onClick={handleClick} name="currentPage" value={currentPage} id={num} key={num} className={num === currentPage? "page-item active": "page-item"}>
                             {num}
                     </button>
                 )
@@ -69,6 +80,7 @@ const Pagination = (props) => {
                 </div>
             </div>
         );
+    return <div>hello</div>
 }
 
 export default Pagination;

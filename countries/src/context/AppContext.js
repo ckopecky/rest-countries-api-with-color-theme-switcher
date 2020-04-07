@@ -11,6 +11,7 @@ const AppContextProvider = ({children}) => {
     const [ countries, setCountries ] = useState([]);
     const [ countryKey, setCountryKey ] = useState({});
     const [ loading, setLoading ] = useState(true);
+    const [ themeMode, setThemeMode ] = useState("light");
 
     let countryData = useAxiosGet(url);
 
@@ -32,15 +33,24 @@ const AppContextProvider = ({children}) => {
         getAndSetCountryData();
     }, [countryData]);
     
-    const defaultContext = { 
+    const context = { 
         countries, 
         countryKey, 
-        loading 
+        loading,
+        themeMode
     };
+
+    const toggleTheme = () => {
+        if(themeMode === "light") {
+            setThemeMode("dark")
+        } else {
+            setThemeMode("light");
+        }
+    }
 
     //the value prop here is what makes our default context accessible to our entire application.
     return (
-        <AppContext.Provider value={defaultContext}>
+        <AppContext.Provider value={{context, toggle:{toggleTheme}}}>
             {children}
         </AppContext.Provider>
     );

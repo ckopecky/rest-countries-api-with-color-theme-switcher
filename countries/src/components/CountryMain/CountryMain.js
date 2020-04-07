@@ -1,22 +1,23 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import "./CountryMain.css";
+import { CountryStyle, CountryStyledLink } from './CountryStyle';
 
 const CountryMain = (props) => {
     console.log("country main", props.country);
     const { name, flag, population, region, capital } = props.country;
 
     return (
-        <div id={props.alpha3Code} className="outer-container">
-            <Link name="country" to={{pathname: `/${name}`, state: {country: props.country}}}>
+        <CountryStyle id={props.alpha3Code}>
+            <CountryStyledLink name="country" to={{pathname: `/${name}`, state: {country: props.country}}}>
                 <img src={flag} height="180"  width="300" alt={name}/>
-                <p><strong>{name}</strong></p>
+                <h3 className="country-name">{name}</h3>
                 <p>Population: {population}</p>
                 <p>Region: {region}</p>
                 <p>Capital: {capital}</p>
-            </Link>
+            </CountryStyledLink>
 
-        </div>
+        </CountryStyle>
     );
 };
 
