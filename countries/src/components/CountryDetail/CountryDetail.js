@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AppContext } from '../../context/AppContext';
 
 const Button = (props) => {
     return (
         <Link to={{pathname: props.name, state: {country: props.country}}}>
-            <button>
-                {props.name}
+            <button key={props.country}>
+                {props.name} 
             </button>
         </Link>
     )
@@ -13,6 +14,9 @@ const Button = (props) => {
 const Country = (props) => {
     console.log(props);
     const { name, nativeName, flag, population, region, capital, topLevelDomain, subregion, borders, currencies, languages} = props.history.location.state.country;
+
+    const { countries } = useContext(AppContext);
+
 
     const getBorderCountryNames = (str) => {
         const { countryCodes } = props;
@@ -26,7 +30,6 @@ const Country = (props) => {
     }
 
     const getBorderCountryInfo = (str) => {
-        const { countries } = props;
         console.log(countries)
         console.log(str);
         const index = countries.filter(country => {
@@ -50,29 +53,27 @@ const Country = (props) => {
             <section>
                 <div>
                 Top Level Domain: {topLevelDomain.map(domain => {
-                    return <span>{domain}</span>
+                    return <span key={domain}>{domain}</span>
                 })}
                 </div>
                 <div>
                 Currency: {currencies.map(currency => {
                     return (
-                        <span>{`name: ${currency.name} symbol: ${(currency.symbol)}`}</span>
+                        <span key={currency}>{`name: ${currency.name} symbol: ${(currency.symbol)}`}</span>
                     )
                 })}
                 </div>
                 <div>
                 Languages: {languages.map(language => {
-                    return <span>{language.name}</span>
+                    return <span key={language}>{language.name}</span>
                 })}
                 </div>
                 <div>
                     Border Countries: {borders.map(border => {
                         let info = getBorderCountryInfo(border)
                         console.log("border country info", info)
-                        const name = getBorderCountryNames(border);
-                        console.log(name, "name");
                         return (
-                        <Button name={getBorderCountryNames(border)} country={info}/>
+                        <Button name={info.name} country={info}/>
                         )
                     })}
                 </div>

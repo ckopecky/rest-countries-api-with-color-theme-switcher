@@ -4,8 +4,7 @@ import "./List.css";
 import { AppContext } from '../../context/AppContext';
 
 const List = (props) => {
-    const { countries } = useContext(AppContext);
-    const { currentPage } = props;
+    const { currentPage, countries } = props;
     return (
         <div className="list-countries">
             {countries.map((country, index)=> {
