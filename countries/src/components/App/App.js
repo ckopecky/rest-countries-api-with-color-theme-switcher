@@ -4,6 +4,7 @@ import CountryDetail from '../CountryDetail/CountryDetail';
 import { Switch, Route } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import { AppContext } from '../../context/AppContext';
+import { GlobalStyle } from './AppStyle';
 
 
 const App = () => {
@@ -22,6 +23,7 @@ const App = () => {
   else {
     return (
       <>
+        <GlobalStyle />
         <Navigation text="Where in the World?" mode="light"/>            
         <Switch>
           <Route exact path="/" component={Pagination} />
