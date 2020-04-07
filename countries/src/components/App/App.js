@@ -7,7 +7,7 @@ import { AppContext } from '../../context/AppContext';
 
 
 const App = () => {
-  const { loading, countries, countryKey } = useContext(AppContext);
+  const { loading } = useContext(AppContext);
 
   if(loading) {
     return (
