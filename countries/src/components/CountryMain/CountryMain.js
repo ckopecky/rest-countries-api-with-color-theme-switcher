@@ -1,5 +1,4 @@
 import React from 'react';
-import "./CountryMain.css";
 import { CountryStyle, CountryStyledLink } from './CountryStyle';
 
 const CountryMain = (props) => {
