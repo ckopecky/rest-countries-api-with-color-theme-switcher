@@ -6,11 +6,10 @@ import { AppContext } from '../../context/AppContext';
 
 const Pagination = (props) => {
     const c = useContext(AppContext);
-    console.log(c);
     const countries = c.context.countries
     
     const [ currentPage, setCurrentPage ] = useState(1);
-    const [ countriesPerPage, setCountriesPerPage ] = useState(12);
+    const [ countriesPerPage ] = useState(12);
 
     const handleClick = event => {
         if(currentPage >= 1 && currentPage <= Math.ceil(countries.length/countriesPerPage)) {
@@ -29,14 +28,6 @@ const Pagination = (props) => {
     let pageNum = [];
     for(let i = 1; i <= Math.ceil(countries.length/countriesPerPage); i++) {
         pageNum = [...pageNum, i];
-    }
-
-    const isActive = () => {
-        if(currentPage) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     const renderPageNumbers = 
@@ -80,7 +71,6 @@ const Pagination = (props) => {
                 </div>
             </div>
         );
-    return <div>hello</div>
 }
 
 export default Pagination;

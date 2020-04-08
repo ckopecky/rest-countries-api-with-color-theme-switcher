@@ -1,10 +1,8 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import "./CountryMain.css";
 import { CountryStyle, CountryStyledLink } from './CountryStyle';
 
 const CountryMain = (props) => {
-    console.log("country main", props.country);
     const { name, flag, population, region, capital } = props.country;
 
     return (

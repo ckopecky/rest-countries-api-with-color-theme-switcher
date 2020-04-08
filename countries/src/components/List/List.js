@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import CountryMain from "../CountryMain/CountryMain";
 import "./List.css";
-import { AppContext } from '../../context/AppContext';
 
 const List = (props) => {
     const { currentPage, countries } = props;

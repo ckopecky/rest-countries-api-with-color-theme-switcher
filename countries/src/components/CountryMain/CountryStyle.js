@@ -11,7 +11,6 @@ export const CountryStyle = styled.div`
 export const CountryStyledLink = styled(Link)`
 
     color: ${props => {
-        console.log(props.theme);
         return props.theme.color
     }
     };

@@ -1,7 +1,4 @@
-import styled, { createGlobalStyle, ThemeContext } from "styled-components"
-import { useContext } from "react";
-
-
+import { createGlobalStyle } from "styled-components"
 
 export const dark = {
     elements: "#2b3945",
@@ -25,6 +22,10 @@ const GlobalStyle = createGlobalStyle`
         --mobile: 576px;
         --tablet: 992px;
         --desktop: 1100px;
+    }
+
+    * {
+        box-sizing: border-box;
     }
 
     body{

@@ -8,7 +8,6 @@ export const useAxiosGet = (url) => {
             const getData = async (url) => {
                 const fetched = await axios.get(url);
                 if (fetched) {
-                    console.log(fetched, "<=============FETCH works")
                     setData(fetched.data);
                 } else {
                     throw Error("axios call didn't work -- GET");

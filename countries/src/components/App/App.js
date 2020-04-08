@@ -1,18 +1,17 @@
-import React, { useEffect, useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import Pagination from '../Pagination/Pagination';
 import CountryDetail from '../CountryDetail/CountryDetail';
 import { Switch, Route } from 'react-router-dom';
 import Navigation from '../Navigation/Navigation';
 import { AppContext } from '../../context/AppContext';
 import { GlobalStyle, dark, light } from './AppStyle';
-import { ThemeProvider, ThemeContext } from 'styled-components';
+import { ThemeProvider } from 'styled-components';
 
 let currentTheme = {
   background: light.background,
   color: light.text
 }
 const theme = (mode) => {
-  console.log(mode, "theme");
   currentTheme = mode === "light" ? {
     background: dark.background,
     inputBackground: dark.inputBackground,
@@ -29,7 +28,6 @@ const theme = (mode) => {
 
 const App = () => {
   const c = useContext(AppContext);
-  const themeContext = useContext(ThemeContext);
   const { loading, themeMode } = c.context;
 
   
