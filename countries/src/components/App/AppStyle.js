@@ -33,31 +33,13 @@ const GlobalStyle = createGlobalStyle`
         color: ${props => `${props.theme.color}`};
         max-width: var(--mobile);
         width: 100%;
-        margin: 20px auto;
+        margin: 0px auto;
         font-size: var(--body-copy-size);
         display: flex;
         flex-direction: column;
         input {
             background: ${props => `${props.theme.inputBackground}`};
         };
-        nav {
-            width: 90%;
-            margin: 0 auto;
-            h1 {
-                font-size: 3rem;
-            }
-        }
-        
-        .page-item {
-            background: ${props => props.theme.elements};
-            color: ${props => props.theme.color};
-            padding: 10px 20px;
-            font-size: 1.4rem;
-        }
-        .active {
-            background: ${props => props.theme.color};
-            color: ${props => props.theme.background};
-        }
     }
 
  
