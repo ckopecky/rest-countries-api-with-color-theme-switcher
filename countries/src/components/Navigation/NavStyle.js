@@ -3,7 +3,6 @@ import styled from 'styled-components';
 export const NavStyle = styled.nav`
     display: flex;
     justify-content: space-between;
-    background: pink;
     width: 98%;
     padding: 20px;
     margin: 0 auto;
