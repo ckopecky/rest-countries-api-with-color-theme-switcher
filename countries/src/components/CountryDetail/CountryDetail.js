@@ -1,7 +1,8 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
 import { ButtonStyle } from './ButtonStyle';
+import { CountryStyle, StyledImg, StyledSection, StyledSectionContainer, StyledH3Section } from './CountryStyle';
 
 const Button = (props) => {
     return (
@@ -13,72 +14,87 @@ const Button = (props) => {
     )
 }
 const Country = (props) => {
-    console.log(props);
-    const { name, nativeName, flag, population, region, capital, topLevelDomain, subregion, borders, currencies, languages} = props.history.location.state.country;
 
+    window.localStorage.setItem("country", JSON.stringify(props.history.location.state.country));
+    
+    const { flag, name, nativeName, languages, borders, topLevelDomain, population, region, subregion, capital, currencies } = JSON.parse(window.localStorage.getItem("country"));
     const c = useContext(AppContext);
-    const countries = c.context.countries
+    if(c) window.localStorage.setItem("countries", JSON.stringify(c.context.countries));
+
+    const countries = JSON.parse(window.localStorage.getItem("countries"));
 
 
-    const getBorderCountryNames = (str) => {
-        const { countryCodes } = props;
-        let name = "";
-        if(countryCodes[str]) {
-            name = countryCodes[str];
-        } else {
-            return;
-        }
-        return name;
-    }
+
+
+    // const getBorderCountryNames = (str) => {
+    //     const { countryCodes } = props;
+    //     if(countryCodes[str]) {
+    //         return countryCodes[str];
+    //     }
+    //     return null;
+    // }
 
     const getBorderCountryInfo = (str) => {
-        const index = countries.filter(country => {
+        const index = countries.filter(country=> {
             return str === country.alpha3Code;
         })
         return index[0];
 
     }
     return (
-        <div id={props.alpha3Code} className="outer-container">
-            <img src={flag} width="300" alt={name}/>
-            <section>
-                <p><strong>{name}</strong></p>
-                <p>Native Name: {nativeName}</p>
-                <p>Population: {population}</p>
-                <p>Region: {region}</p>
-                <p>Sub Region: {subregion}</p>
-                <p>Capital: {capital}</p>
-            </section>
-            <section>
+        <>
+        {/* TODO: Back Button */}
+            <CountryStyle id={props.alpha3Code}>
+                <img src={flag} alt={name}/>
                 <div>
-                Top Level Domain: {topLevelDomain.map(domain => {
-                    return <span key={domain}>{domain}</span>
-                })}
+                    <h3>{name}</h3>
+                    <div className="styled-div">
+                        <div className="section">
+                            <p><span className="headings">Native Name:</span> {nativeName}</p> 
+                            <p><span className="headings">Population:</span> {population}</p>
+                            <p><span className="headings">Region:</span> {region}</p>
+                            <p><span className="headings">Sub Region:</span> {subregion}</p>
+                            <p><span className="headings">Capital:</span> {capital}</p>
+                        </div>
+                        <div className="section">
+                            {topLevelDomain && (
+                                <p>
+                                    <span className="headings">Domain:</span> {topLevelDomain.map(domain => <span key={domain}>{domain}</span>
+                                    )}
+                                </p>
+                            )}
+                            {currencies && (
+                                <p>
+                                <span className="headings">Currency (Symbol):</span> {currencies.map(currency => {
+                                    return (
+                                        <span key={currency.name}>{`${currency.name} (${currency.symbol})`}</span>
+                                    )
+                                })}
+                                </p>
+                            )}
+                            {languages && (
+                                <p>
+                                <span className="headings">Languages:</span> {languages.map(language => {
+                                    return <span key={language.name}>{language.name}</span>
+                                })}
+                                </p>
+                            )}
+                            {/* {borders && (
+                                <div>
+                                    Border Countries: {borders.map(border => {
+                                        let info = getBorderCountryInfo(border)
+                                        return (
+                                        <Button name={info.name} value={border} country={info}/>
+                                        )
+                                    })}
+                                    <div>gekko</div>
+                                </div>
+                            )} */}
+                        </div>
+                    </div>
                 </div>
-                <div>
-                Currency: {currencies.map(currency => {
-                    return (
-                        <span key={currency}>{`name: ${currency.name} symbol: ${(currency.symbol)}`}</span>
-                    )
-                })}
-                </div>
-                <div>
-                Languages: {languages.map(language => {
-                    return <span key={language}>{language.name}</span>
-                })}
-                </div>
-                <div>
-                    Border Countries: {borders.map(border => {
-                        let info = getBorderCountryInfo(border)
-                        console.log("border country info", info)
-                        return (
-                        <Button name={info.name} country={info}/>
-                        )
-                    })}
-                </div>
-            </section>
-                
-        </div>
+            </CountryStyle>
+        </>
     )   
 };
 
