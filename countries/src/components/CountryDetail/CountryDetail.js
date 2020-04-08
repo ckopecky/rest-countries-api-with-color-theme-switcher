@@ -1,30 +1,21 @@
-import React, { useContext, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { AppContext } from '../../context/AppContext';
+import { Button } from './Button';
+import { CountryStyle, StyledBorderButtons, StyledImg } from './CountryStyle';
 import { ButtonStyle } from './ButtonStyle';
-import { CountryStyle, StyledImg, StyledSection, StyledSectionContainer, StyledH3Section } from './CountryStyle';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
 
-const Button = (props) => {
-    return (
-        <Link to={{pathname: props.name, state: {country: props.country}}}>
-            <ButtonStyle key={props.country}>
-                {props.name} 
-            </ButtonStyle>
-        </Link>
-    )
-}
 const Country = (props) => {
-
+    console.log(props.history);
     window.localStorage.setItem("country", JSON.stringify(props.history.location.state.country));
     
     const { flag, name, nativeName, languages, borders, topLevelDomain, population, region, subregion, capital, currencies } = JSON.parse(window.localStorage.getItem("country"));
     const c = useContext(AppContext);
     if(c) window.localStorage.setItem("countries", JSON.stringify(c.context.countries));
 
-    const countries = JSON.parse(window.localStorage.getItem("countries"));
-
-
-
+    const countries = JSON.parse(window.localStorage.getItem("countries"))
+    console.log(flag);
 
     // const getBorderCountryNames = (str) => {
     //     const { countryCodes } = props;
@@ -35,18 +26,32 @@ const Country = (props) => {
     // }
 
     const getBorderCountryInfo = (str) => {
-        const index = countries.filter(country=> {
-            return str === country.alpha3Code;
-        })
-        return index[0];
+        const matches = JSON.parse(window.localStorage.getItem('countries')).filter(country => {
+            return country.alpha3Code === str;
+        });
+
+        if(matches.length > 1) {
+            throw new Error("must not have more than one match");
+        } else {
+            return matches[0];
+        }
+        
 
     }
+
+    const handleBack = () => {
+        props.history.goBack();
+    }
+
     return (
         <>
-        {/* TODO: Back Button */}
+        <ButtonStyle onClick={handleBack}>
+            <FontAwesomeIcon icon={faArrowLeft} />
+            <span>   Back</span>
+        </ButtonStyle>
             <CountryStyle id={props.alpha3Code}>
-                <img src={flag} alt={name}/>
-                <div>
+                <StyledImg url={flag}/>
+                <div className="h3-div">
                     <h3>{name}</h3>
                     <div className="styled-div">
                         <div className="section">
@@ -79,19 +84,23 @@ const Country = (props) => {
                                 })}
                                 </p>
                             )}
-                            {/* {borders && (
-                                <div>
-                                    Border Countries: {borders.map(border => {
-                                        let info = getBorderCountryInfo(border)
-                                        return (
-                                        <Button name={info.name} value={border} country={info}/>
-                                        )
-                                    })}
-                                    <div>gekko</div>
-                                </div>
-                            )} */}
                         </div>
                     </div>
+                        <StyledBorderButtons>
+                            {borders && (
+                                <div>
+                                    <span className="headings">Border Countries: </span> {borders.map((border, index) => {
+                                        let info = getBorderCountryInfo(border)
+                                        if(index < 3) {
+                                            return (
+                                                <Button value={border} country={info}/>
+                                            )
+                                        }
+                                        
+                                    })}
+                                </div>
+                            )}
+                        </StyledBorderButtons>
                 </div>
             </CountryStyle>
         </>
