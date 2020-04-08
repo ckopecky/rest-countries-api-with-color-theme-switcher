@@ -1,15 +1,15 @@
 import React from 'react';
 import CountryMain from "../CountryMain/CountryMain";
-import "./List.css";
+import { ListStyle } from './ListStyle';
 
 const List = (props) => {
     const { currentPage, countries } = props;
     return (
-        <div className="list-countries">
+        <ListStyle className="list-countries">
             {countries.map((country, index)=> {
-            return <CountryMain {...props} key={index} currentPage={currentPage} country={country} />
-    })}
-    </div>
+                return <CountryMain {...props} key={index} currentPage={currentPage} country={country} />
+            })}
+        </ListStyle>
     );
 };
 
