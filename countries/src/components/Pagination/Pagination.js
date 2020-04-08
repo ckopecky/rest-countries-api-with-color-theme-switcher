@@ -1,7 +1,7 @@
 import React, { useState, useContext } from 'react';
 import List from "../List/List";
-import "./Pagination.css"
 import { AppContext } from '../../context/AppContext';
+import { PaginationButton, PaginationContainer } from './PaginationStyle';
 
 
 const Pagination = (props) => {
@@ -34,19 +34,27 @@ const Pagination = (props) => {
             pageNum.map(num => {
             if(num >= currentPage - 2 && num <= currentPage + 2) {
                 return (
-                    <button onClick={handleClick} name="currentPage" value={currentPage} id={num} key={num} className={num === currentPage? "page-item active": "page-item"}>
-                            {num}
-                    </button>
+                    <PaginationButton 
+                        onClick={handleClick} 
+                        name="currentPage" 
+                        value={currentPage} 
+                        id={num} 
+                        key={num} 
+                        activePage={
+                            num === currentPage ? "active": ""}
+                    >
+                        {num}
+                    </PaginationButton>
                 )
             } else {
-                return <div></div>;
+                return <div style={{display: "none"}}></div>;
             }
         });
 
         return (
             <div>
                 <div>{renderCountries}</div>
-                <div className="pagination-container">
+                <PaginationContainer>
                     <div 
                         className={currentPage === 1 ? "hidden": "render-pages"} onClick={handleClick} 
                         id="1">
@@ -68,7 +76,7 @@ const Pagination = (props) => {
                         id={Math.ceil(countries.length/countriesPerPage)} onClick={handleClick}>
                             ≥≥
                     </div>
-                </div>
+                </PaginationContainer>
             </div>
         );
 }
