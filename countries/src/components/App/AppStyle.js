@@ -37,9 +37,7 @@ const GlobalStyle = createGlobalStyle`
         font-size: var(--body-copy-size);
         display: flex;
         flex-direction: column;
-        input {
-            background: ${props => `${props.theme.inputBackground}`};
-        };
+        
     }
 
  

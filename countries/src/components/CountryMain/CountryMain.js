@@ -3,7 +3,7 @@ import { CountryStyle, CountryStyledLink } from './CountryStyle';
 
 const CountryMain = (props) => {
     const { name, flag, population, region, capital } = props.country;
-    const formatPopulation = new Number(population).toLocaleString();
+    const formatPopulation = Number(population).toLocaleString();
     return (
         <CountryStyle id={props.alpha3Code}>
             <CountryStyledLink name="country" to={{pathname: `/${name}`, state: {country: props.country}}}>
