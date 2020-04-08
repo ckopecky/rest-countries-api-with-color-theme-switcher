@@ -1,6 +1,10 @@
 import React, { useContext } from 'react';
-import "./Navigation.css";
+import { withRouter, Link } from 'react-router-dom';
 import { AppContext } from '../../context/AppContext';
+import { NavStyle } from './NavStyle';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faMoon, faSun} from "@fortawesome/free-regular-svg-icons"
+
 
 const Navigation = (props) => {
     const context = useContext(AppContext);
@@ -9,17 +13,20 @@ const Navigation = (props) => {
         context.toggle.toggleTheme();
     }
     return (
-        <div>
-            <nav>
-                <h1>
-                    {props.text}
-                </h1>
-                <div onClick={handleClick}>
-                    {props.mode}
-                </div>
-            </nav>
-        </div>
+
+            <NavStyle>
+                <Link to="/">
+                    <h1>
+                        {props.text}
+                    </h1>
+                </Link>
+                    <div onClick={handleClick}>
+                        <FontAwesomeIcon size="lg" icon={props.mode === "light" ? faSun: faMoon} />
+                        <span>   {props.mode}</span>
+                    </div>
+            </NavStyle>
+
     );
 }
 
-export default Navigation
+export default withRouter(Navigation);
