@@ -7,12 +7,14 @@ import { ButtonStyle } from './ButtonStyle';
 const Button = (props) => {
     console.log(props, "button props");
     return (
-        <Link to={{pathname: props.country.name, state: {country: props.country}}}>
-            <ButtonStyle key={props.country}>
-                {props.country.name} 
-            </ButtonStyle>
-        </Link>
+    //     <Link to={{pathname: props.country.name, state: props.country}}>
+    //         <ButtonStyle key={props.country}>
+    //             {props.country.name} 
+    //         </ButtonStyle>
+    //     </Link>
+    <div></div>
     )
+
 }
 
 export { Button };
