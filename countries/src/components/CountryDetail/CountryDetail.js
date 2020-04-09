@@ -10,12 +10,13 @@ const Country = (props) => {
     console.log(props.history);
     window.localStorage.setItem("country", JSON.stringify(props.history.location.state.country));
     
-    const { flag, name, nativeName, languages, borders, topLevelDomain, population, region, subregion, capital, currencies } = JSON.parse(window.localStorage.getItem("country"));
+    const { flag, name, nativeName, languages, borders, topLevelDomain, region, subregion, capital, currencies } = JSON.parse(window.localStorage.getItem("country"));
     const c = useContext(AppContext);
+    console.log(c, "app context");
     if(c) window.localStorage.setItem("countries", JSON.stringify(c.context.countries));
 
-    const countries = JSON.parse(window.localStorage.getItem("countries"))
-    console.log(flag);
+    const { formatPop } = props.history.location.state;
+    console.log(flag, nativeName, formatPop);
 
     // const getBorderCountryNames = (str) => {
     //     const { countryCodes } = props;
@@ -56,7 +57,7 @@ const Country = (props) => {
                     <div className="styled-div">
                         <div className="section">
                             <p><span className="headings">Native Name:</span> {nativeName}</p> 
-                            <p><span className="headings">Population:</span> {population}</p>
+                            <p><span className="headings">Population:</span> {formatPop}</p>
                             <p><span className="headings">Region:</span> {region}</p>
                             <p><span className="headings">Sub Region:</span> {subregion}</p>
                             <p><span className="headings">Capital:</span> {capital}</p>
@@ -95,6 +96,8 @@ const Country = (props) => {
                                             return (
                                                 <Button value={border} country={info}/>
                                             )
+                                        } else {
+                                            return <div></div>
                                         }
                                         
                                     })}
