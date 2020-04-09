@@ -6,6 +6,7 @@ import Navigation from '../Navigation/Navigation';
 import { AppContext } from '../../context/AppContext';
 import { GlobalStyle, dark, light } from './AppStyle';
 import { ThemeProvider } from 'styled-components';
+import Search from '../Search/Search';
 
 let currentTheme = {
   background: light.background,
@@ -51,7 +52,8 @@ const App = () => {
       <ThemeProvider theme={() => theme(themeMode)}>
       <>
         <GlobalStyle />
-        <Navigation text="Where in the World?" mode={themeMode}/>            
+        <Navigation text="Where in the World?" mode={themeMode}/>
+        <Search />            
         <Switch>
           <Route exact path="/" component={Pagination} />
           <Route path="/:name" component={CountryDetail} /> 
