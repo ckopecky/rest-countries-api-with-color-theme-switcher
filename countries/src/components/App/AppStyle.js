@@ -9,8 +9,8 @@ export const dark = {
 
 export const light = {
     elements: "#ffffff",
-    background: "#fafafa",
-    inputBackground: "#858585",
+    background: "#ECECEF",
+    inputBackground: "#FCFCFD",
     text: "#111517"
 }
 

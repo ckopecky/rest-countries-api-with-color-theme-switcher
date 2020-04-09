@@ -8,11 +8,15 @@ export const SearchStyle = styled.form`
     margin-left: 75px;
     border-radius: 10px;
     input {
-            background: blanchedalmond;
-            color: black;
+            background: ${props => props.theme.inputBackground};
+            color: ${props => props.theme.color};
+            font-size: 1.6rem;
             height: 100%;
             padding-left: 10px;
             min-width: 200px;
+            ::placeholder {
+                color: ${props => props.theme.color}    
+            }
         };
     div {
         height: 98%;
