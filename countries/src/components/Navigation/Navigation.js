@@ -8,7 +8,6 @@ import { faMoon, faSun} from "@fortawesome/free-regular-svg-icons"
 
 const Navigation = (props) => {
     const context = useContext(AppContext);
-    console.log(context, "nav context")
     const handleClick = (event) => {
         context.toggle.toggleTheme();
     }
